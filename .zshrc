@@ -69,6 +69,7 @@ DISABLE_AUTO_TITLE="true"
 plugins=(
   git
   gitfast
+  git-extras
 )
 
 source $ZSH/oh-my-zsh.sh
