@@ -253,13 +253,12 @@ bar {
       		urgent_workspace    $darkblack $darkblack $white
             }
     #status_command i3status -t
-	status_command i3blocks
-    #~/.config/i3blocks/config
-    font pango:Roboto 11, FontAwesome 11, Icons 11
-	#font pango:DejaVu Sans Mono, Icons 12
-	position top 
+    status_command i3blocks
+    #font pango:Roboto 11, FontAwesome 11, Icons 11
+    font pango:DejaVu Sans Mono, Icons 10
+	position top
     mode dock
-    modifier None
+    #modifier None
 }
 
 
