@@ -60,7 +60,7 @@ DISABLE_AUTO_TITLE="true"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
-ZSH_CUSTOM=$HOME/oh-my-zsh-custom
+ZSH_CUSTOM=$HOME/.config/oh-my-zsh-custom
 
 
 # Which plugins would you like to load?
