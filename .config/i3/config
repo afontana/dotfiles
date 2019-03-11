@@ -60,6 +60,13 @@ bindsym $mod+Shift+s            gaps inner current minus 5
 
 bindsym $mod+Shift+q            kill
 
+bindsym $mod+r                  exec $term -e $FILE
+bindsym $mod+Shift+r            exec --no-startup-id winresize
+
+bindsym $mod+p			        exec --no-startup-id lmc toggle
+bindsym $mod+Shift+p            exec --no-startup-id lmc pause
+
+
 workspace_auto_back_and_forth yes
 
 bindsym $mod+d exec dmenu_run -fn "Droid Sans Mono-10"
@@ -82,11 +89,38 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# #---Media Keys---# #
+
+# Volume keys
+bindsym $mod+plus		    exec --no-startup-id lmc up 5
+bindsym $mod+Shift+plus		exec --no-startup-id lmc up 15
+bindsym $mod+minus 		    exec --no-startup-id lmc down 5
+bindsym $mod+Shift+minus	exec --no-startup-id lmc down 15
+bindsym $mod+less 		    exec --no-startup-id lmc prev
+bindsym $mod+Shift+less		exec --no-startup-id lmc replay
+bindsym $mod+greater		exec --no-startup-id lmc next
+bindsym $mod+Shift+greater	exec --no-startup-id lmc next
+
+
+# #---Extra XF86 Keys---# #
+# These are the extra media keys that some keyboards have.
+bindsym XF86AudioMute           exec --no-startup-id lmc mute
+bindsym XF86AudioLowerVolume    exec --no-startup-id lmc down 5
+bindsym XF86AudioRaiseVolume    exec --no-startup-id lmc up 5
+bindsym XF86TouchpadToggle      exec --no-startup-id toggletouchpad
+bindsym XF86TouchpadOn		    exec --no-startup-id synclient TouchpadOff=0
+bindsym XF86TouchpadOff         exec --no-startup-id synclient TouchpadOff=1
+
+
 bindsym $mod+h split h
 
 bindsym $mod+v split v
 
+set $freeze Distraction-free mode (super+shift+f to reactivate bindings)
+mode "$freeze" { bindsym $mod+Shift+f mode "default"
+}
 bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f		mode "$freeze" ;; exec --no-startup-id notify-send "<b>Distraction-free mode activated.</b> Press Super+Shift+f to return."
 
 #bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
@@ -130,7 +164,7 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves you	r layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+bindsym $mod+F5 restart
 
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
@@ -151,7 +185,7 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-bindsym $mod+r mode "resize"
+#bindsym $mod+r mode "resize"
 
 set $base00 #1d2021
 set $base01 #3c3836
