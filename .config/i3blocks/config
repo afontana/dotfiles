@@ -12,7 +12,7 @@ interval=once
 signal=10
 
 [cpu]
-interval=15
+interval=5
 label=💻
 
 [disk]
