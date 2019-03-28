@@ -13,20 +13,23 @@ for_window [instance="dropdown_*"] floating enable
 for_window [instance="dropdown_*"] move scratchpad
 for_window [instance="dropdown_*"] sticky enable
 for_window [instance="dropdown_*"] scratchpad show
-for_window [instance="dropdown_tmuxdd"] resize set 625 450
-for_window [instance="dropdown_dropdowncalc"] resize set 800 300
-for_window [instance="dropdown_tmuxdd"] border pixel 3
-for_window [instance="dropdown_dropdowncalc"] border pixel 2
 for_window [instance="dropdown_*"] move position center
+for_window [instance="dropdown_tmuxdd"] resize set 625 450
+for_window [instance="dropdown_tmuxdd"] border pixel 3
+for_window [instance="dropdown_dropdowncalc"] resize set 800 300
+for_window [instance="dropdown_dropdowncalc"] border pixel 3
+for_window [instance="dropdown_dropdownst"] resize set 800 450
+for_window [instance="dropdown_dropdownst"] border pixel 3
 
 #Exec on start
 exec --no-startup-id setbg
 exec --no-startup-id dunst
-exec --no-startup-id compton
 exec --no-startup-id mpd
 exec --no-startup-id compton
 
-font pango:DejaVu Sans Mono 12
+#font pango:DejaVu Sans Mono 12
+#font pango:Source Code Pro 10
+font pango:Noto Mono Regular 13
 
 new_window pixel 0
 new_float pixel 0
@@ -35,6 +38,9 @@ gaps outer 10
 hide_edge_borders both
 
 floating_modifier $mod
+
+#Disable/Enable touchpad
+bindsym $mod+Control+F1         exec --no-startup-id toggletouchpad
 
 bindsym $mod+Return             exec $term
 bindsym $mod+Shift+Return       exec --no-startup-id samedir
@@ -53,6 +59,7 @@ bindsym $mod+Insert		        exec --no-startup-id showclip
 #bindsym $mod+Del                exec --no-startup-id xcqr
 
 bindsym $mod+t			        split toggle
+bindsym $mod+Control+t          exec --no-startup-id $term -n "dropdown_dropdownst"
 bindsym $mod+Shift+t            gaps inner current set 15; gaps outer current set 15
 
 bindsym $mod+s			        gaps inner current plus 5
@@ -60,16 +67,20 @@ bindsym $mod+Shift+s            gaps inner current minus 5
 
 bindsym $mod+Shift+q            kill
 
-bindsym $mod+r                  exec $term -e $FILE
+bindsym $mod+Control+r          exec $term -e $FILE
 bindsym $mod+Shift+r            exec --no-startup-id winresize
 
 bindsym $mod+p			        exec --no-startup-id lmc toggle
 bindsym $mod+Shift+p            exec --no-startup-id lmc pause
 
+bindsym $mod+x                  exec --no-startup-id i3lock-fancy
+
+# sticky preview for media
+#bindsym $mod+Shift+p fullscreen disable; floating enable; resize set 350 px 197 px; sticky enable; move window to position 1006 px 537 px
 
 workspace_auto_back_and_forth yes
 
-bindsym $mod+d exec dmenu_run -fn "Droid Sans Mono-10"
+bindsym $mod+d exec dmenu_run -fn "Droid Sans Mono-12"
 
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -107,9 +118,9 @@ bindsym $mod+Shift+greater	exec --no-startup-id lmc next
 bindsym XF86AudioMute           exec --no-startup-id lmc mute
 bindsym XF86AudioLowerVolume    exec --no-startup-id lmc down 5
 bindsym XF86AudioRaiseVolume    exec --no-startup-id lmc up 5
-bindsym XF86TouchpadToggle      exec --no-startup-id toggletouchpad
-bindsym XF86TouchpadOn		    exec --no-startup-id synclient TouchpadOff=0
-bindsym XF86TouchpadOff         exec --no-startup-id synclient TouchpadOff=1
+#bindsym XF86TouchpadToggle      exec --no-startup-id toggletouchpad
+#bindsym XF86TouchpadOn		    exec --no-startup-id synclient TouchpadOff=0
+#bindsym XF86TouchpadOff         exec --no-startup-id synclient TouchpadOff=1
 
 
 bindsym $mod+h split h
@@ -128,16 +139,16 @@ bindsym $mod+e layout toggle split
 
 bindsym $mod+a focus parent
 
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws1  "1:Monitor  "
+set $ws2  "2:Code  "
+set $ws3  "3:Web  "
+set $ws4  "4:Virt  "
+set $ws5  "5:General  "
+set $ws6  "6:Settings "
+set $ws7  "7:Files "
+set $ws8  "8:Documents "
+set $ws9  "9:Chat "
+set $ws10 "10:Media "
 
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
@@ -185,7 +196,7 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-#bindsym $mod+r mode "resize"
+bindsym $mod+r mode "resize"
 
 set $base00 #1d2021
 set $base01 #3c3836
@@ -208,8 +219,10 @@ bar {
    #status_command i3status -t
     status_command i3blocks
     #font pango:Roboto 11, FontAwesome 11, Icons 11
-    font pango:DejaVu Sans Mono, Icons 10
-	position top
+    #font pango:DejaVu Sans Mono, Icons 10
+    #font pango:Noto Sans 13
+    font pango:Noto Mono Regular 13
+    position top
     mode dock
     modifier None
 
@@ -237,6 +250,7 @@ client.urgent           $base08 $base08 $base00 $base08 $base08
 client.placeholder      $base00 $base00 $base05 $base00 $base00
 client.background       $base07
 
+set $locker i3lock-fancy
 set $mode_system System (l) lock, (e) exit, (s) suspend, (h) hibernate, (r) reboot, (p) poweroff
 mode "$mode_system" {
 	bindsym l exec --no-startup-id $locker, mode "default"
@@ -250,4 +264,17 @@ mode "$mode_system" {
 	bindsym Escape mode "default"
 }
 bindsym $mod+Pause mode "$mode_system"
+
+
+for_window [class="^VirtualBox Machine$"] floating enable; resize set 800 600
+#for_window [class="^VirtualBox Machine$"] resize set 1890 1017
+
+bindsym $mod+KP_Subtract move scratchpad
+bindsym $mod+KP_Add scratchpad show
+
+# set a window to stick to the glass
+bindsym $mod+Shift+i sticky toggle
+
+# move focused floating window to the center of all outputs
+bindsym $mod+Shift+h move absolute position center
 

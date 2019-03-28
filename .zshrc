@@ -72,6 +72,7 @@ plugins=(
   git
   gitfast
   git-extras
+  zsh-completions
 )
 
 source $ZSH/oh-my-zsh.sh
