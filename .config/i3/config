@@ -8,6 +8,8 @@ set $reboot sudo -A reboot
 set $netrefresh --no-startup-id sudo -A systemctl restart NetworkManager
 set $hibernate sudo -A systemctl suspend
 
+
+
 # General dropdown window traits. The order can matter.
 for_window [instance="dropdown_*"] floating enable
 for_window [instance="dropdown_*"] move scratchpad
@@ -73,7 +75,7 @@ bindsym $mod+Shift+r            exec --no-startup-id winresize
 bindsym $mod+p			        exec --no-startup-id lmc toggle
 bindsym $mod+Shift+p            exec --no-startup-id lmc pause
 
-bindsym $mod+x                  exec --no-startup-id i3lock-fancy
+bindsym $mod+q                  exec --no-startup-id i3lock-fancy
 
 # sticky preview for media
 #bindsym $mod+Shift+p fullscreen disable; floating enable; resize set 350 px 197 px; sticky enable; move window to position 1006 px 537 px
@@ -139,15 +141,15 @@ bindsym $mod+e layout toggle split
 
 bindsym $mod+a focus parent
 
-set $ws1  "1:Monitor  "
+set $ws1  "1:Sysadmin  "
 set $ws2  "2:Code  "
 set $ws3  "3:Web  "
 set $ws4  "4:Virt  "
-set $ws5  "5:General  "
-set $ws6  "6:Settings "
+set $ws5  "5:Work  "
+set $ws6  "6:Config "
 set $ws7  "7:Files "
 set $ws8  "8:Documents "
-set $ws9  "9:Chat "
+set $ws9  "9:Messages "
 set $ws10 "10:Media "
 
 bindsym $mod+1 workspace $ws1
@@ -225,7 +227,7 @@ bar {
     position top
     mode dock
     modifier None
-
+    tray_output primary
 
     colors {
         background $base00
@@ -265,12 +267,10 @@ mode "$mode_system" {
 }
 bindsym $mod+Pause mode "$mode_system"
 
-
 for_window [class="^VirtualBox Machine$"] floating enable; resize set 800 600
-#for_window [class="^VirtualBox Machine$"] resize set 1890 1017
 
-bindsym $mod+KP_Subtract move scratchpad
-bindsym $mod+KP_Add scratchpad show
+bindsym $mod+Shift+KP_Subtract move scratchpad
+bindsym $mod+Shift+KP_Add scratchpad show
 
 # set a window to stick to the glass
 bindsym $mod+Shift+i sticky toggle
